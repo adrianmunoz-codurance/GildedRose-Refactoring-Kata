@@ -1,9 +1,8 @@
-import { Item, GildedRose } from '@/gilded-rose';
+import approvals from 'approvals';
+import {generateGoldenMasterFor} from "../golden-master-text-test";
 
 describe('Gilded Rose', () => {
-  it('should foo', () => {
-    const gildedRose = new GildedRose([new Item('foo', 0, 0)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].name).toBe('fixme');
+  it('should behave the same way that it is working in production', () => {
+    approvals.verify(__dirname, 'goldenMaster', generateGoldenMasterFor(30), { reporters: ['meld'] });
   });
 });
