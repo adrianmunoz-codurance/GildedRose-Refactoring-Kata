@@ -30,33 +30,44 @@ export class GildedRose {
     let isNotSulfuras = item.name != 'Sulfuras, Hand of Ragnaros';
     let isAgedBrie = item.name === 'Aged Brie';
 
+    if (isAgedBrie) {
+      this.increment_quality(item);
+    }
+
+    if (isBackstage) {
+      this.increment_quality(item);
+      if (item.sellIn < 11) {
+        this.increment_quality(item);
+      }
+      if (item.sellIn < 6) {
+        this.increment_quality(item);
+      }
+    }
+
     if (!isAgedBrie && !isBackstage) {
       this.decrement_quality(item);
-    } else {
-        this.increment_quality(item);
-        if (isBackstage && item.sellIn < 11) {
-          this.increment_quality(item);
-        }
-        if (isBackstage && item.sellIn < 6) {
-          this.increment_quality(item);
-        }
     }
 
     if (isNotSulfuras) {
       item.sellIn = item.sellIn - 1;
     }
 
-    if (item.sellIn < 0) {
       if (!isAgedBrie && !isBackstage) {
+        if (item.sellIn < 0) {
         this.decrement_quality(item);
+      }
       }
 
       if (isBackstage) {
-        item.quality = 0
+        if (item.sellIn < 0) {
+          item.quality = 0
+        }
       }
       if (isAgedBrie) {
+        if (item.sellIn < 0) {
         this.increment_quality(item);
-      }
+        }
+
     }
   }
 
