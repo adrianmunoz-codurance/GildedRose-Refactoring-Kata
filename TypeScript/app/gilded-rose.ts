@@ -31,10 +31,16 @@ export class GildedRose {
     let isAgedBrie = item.name === 'Aged Brie';
 
     if (isAgedBrie) {
+      item.sellIn = item.sellIn - 1;
       this.increment_quality(item);
+
+      if (item.sellIn < 0) {
+        this.increment_quality(item);
+      }
     }
 
     if (isBackstage) {
+
       this.increment_quality(item);
       if (item.sellIn < 11) {
         this.increment_quality(item);
@@ -42,32 +48,21 @@ export class GildedRose {
       if (item.sellIn < 6) {
         this.increment_quality(item);
       }
+      item.sellIn = item.sellIn - 1;
+      if (item.sellIn < 0) {
+        item.quality = 0
+      }
     }
 
     if (!isAgedBrie && !isBackstage) {
+      if (isNotSulfuras) {
+        item.sellIn = item.sellIn - 1;
+      }
       this.decrement_quality(item);
-    }
 
-    if (isNotSulfuras) {
-      item.sellIn = item.sellIn - 1;
-    }
-
-      if (!isAgedBrie && !isBackstage) {
-        if (item.sellIn < 0) {
+      if (item.sellIn < 0) {
         this.decrement_quality(item);
       }
-      }
-
-      if (isBackstage) {
-        if (item.sellIn < 0) {
-          item.quality = 0
-        }
-      }
-      if (isAgedBrie) {
-        if (item.sellIn < 0) {
-        this.increment_quality(item);
-        }
-
     }
   }
 
